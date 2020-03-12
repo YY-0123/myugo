@@ -33,6 +33,16 @@ export default {
 </script>
 <style lang='less'>
 .search {
+  .content {
+    position: absolute;
+    top: 95rpx;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9;
+    background-color: #fff;
+    display: none;
+  }
   .input-box {
     background-color: #ff2d4a;
     padding: 20rpx 16rpx;
@@ -40,6 +50,7 @@ export default {
     position: relative;
     input {
       background-color: #fff;
+      height: 60rpx;
       border-radius: 6rpx;
       flex: 1;
       padding-left: 55rpx;
@@ -73,6 +84,9 @@ export default {
     }
   }
   &.focused {
+    .content {
+      display: block;
+    }
     .input-box {
       background-color: #eee;
       &::after {
