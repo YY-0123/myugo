@@ -1,12 +1,7 @@
 <template>
   <view class="container">
-    <!-- 搜索栏 -->
-    <view class="search">
-      <view class="input-box">
-        <input type="text" />
-      </view>
-      <view class="content"></view>
-    </view>
+    <!-- 模板中使用子组件 -->
+    <search />
     <!-- 轮播图 -->
     <swiper indicator-dots>
       <swiper-item>
@@ -112,11 +107,15 @@
 </template>
 
 <script>
+import search from "@/components/search.vue";
 export default {
   data() {
     return {
       title: "Nihao"
     };
+  },
+  components: {
+    search
   },
   onLoad() {},
   methods: {}
@@ -124,15 +123,6 @@ export default {
 </script>
 
 <style lang='less'>
-.search {
-  .input-box {
-    padding: 20rpx 16rpx;
-    background-color: #ff2d4a;
-    input {
-      background-color: #fff;
-    }
-  }
-}
 swiper {
   height: 340rpx;
   image {
@@ -155,6 +145,7 @@ swiper {
     width: 750rpx;
     height: 60rpx;
     padding: 20rpx 0 0 10rpx;
+    box-sizing: border-box;
     background-color: #f4f4f4;
   }
   .items {
