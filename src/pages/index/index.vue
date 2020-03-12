@@ -1,5 +1,11 @@
 <template>
-	<view class="content">
+	<view class="container">
+	<view class="search">
+		<view class="input-box">
+		<input type="text" />
+	</view>
+	<view class="content"></view>
+	</view>
 		<image class="logo" src="/static/logo.png"></image>
 		<view>
 			<text class="title">{{title}}</text>
@@ -24,19 +30,11 @@
 </script>
 
 <style>
-	.content {
-		text-align: center;
-		height: 400upx;
+	.search .input-box {
+		padding: 20rpx 16rpx;
+		background-color: #FF2D4A;
 	}
-
-	.logo {
-		height: 200upx;
-		width: 200upx;
-		margin-top: 200upx;
-	}
-
-	.title {
-		font-size: 36upx;
-		color: #8f8f94;
+	.search .input-box input {
+		background-color: #fff;
 	}
 </style>
