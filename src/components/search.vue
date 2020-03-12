@@ -35,18 +35,50 @@ export default {
     background-color: #ff2d4a;
     padding: 20rpx 16rpx;
     display: flex;
+    position: relative;
     input {
       background-color: #fff;
       border-radius: 6rpx;
       flex: 1;
+      padding-left: 55rpx;
     }
     .cancel {
       display: none;
+    }
+    &::before {
+      content: "";
+      display: none;
+      width: 32rpx;
+      height: 32rpx;
+      position: absolute;
+      top: 50%;
+      transform: translate(15rpx, -50%);
+      background-image: url("http://static.botue.com/ugo/images/icon_search%402x.png");
+      background-size: 32rpx;
+    }
+    &::after {
+      content: "搜索";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      padding-left: 40rpx;
+      transform: translate(-50%, -50%);
+      font-size: 24rpx;
+      color: #ccc;
+      background-image: url("http://static.botue.com/ugo/images/icon_search%402x.png");
+      background-size: 32rpx;
+      background-repeat: no-repeat;
     }
   }
   &.focused {
     .input-box {
       background-color: #eee;
+      &::after {
+        display: none;
+      }
+      &::before {
+        display: block;
+      }
     }
     .cancel {
       display: block;
