@@ -19,6 +19,21 @@
         <image src="/static/uploads/banner3.png" />
       </swiper-item>
     </swiper>
+    <!-- 导航菜单 -->
+    <view class="navs">
+      <navigator url>
+        <image src="/static/uploads/icon_index_nav_1@2x.png" />
+      </navigator>
+      <navigator url>
+        <image src="/static/uploads/icon_index_nav_2@2x.png" />
+      </navigator>
+      <navigator url>
+        <image src="/static/uploads/icon_index_nav_3@2x.png" />
+      </navigator>
+      <navigator url>
+        <image src="/static/uploads/icon_index_nav_4@2x.png" />
+      </navigator>
+    </view>
   </view>
 </template>
 
@@ -49,6 +64,16 @@ swiper {
   image {
     width: 750rpx;
     height: 340rpx;
+  }
+}
+.navs {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 30rpx;
+  align-items: center;
+  navigator {
+    width: 128rpx;
+    height: 140rpx;
   }
 }
 </style>
