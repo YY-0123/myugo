@@ -34,19 +34,21 @@ export default {
 };
 </script>
 
-<style>
-.search .input-box {
-  padding: 20rpx 16rpx;
-  background-color: #ff2d4a;
-}
-.search .input-box input {
-  background-color: #fff;
+<style lang='less'>
+.search {
+  .input-box {
+    padding: 20rpx 16rpx;
+    background-color: #ff2d4a;
+    input {
+      background-color: #fff;
+    }
+  }
 }
 swiper {
   height: 340rpx;
-}
-swiper image {
-  width: 750rpx;
-  height: 340rpx;
+  image {
+    width: 750rpx;
+    height: 340rpx;
+  }
 }
 </style>
