@@ -6,7 +6,19 @@
       <text class="cancel" @click="handleCancel">取消</text>
     </view>
     <!-- 搜索结果 -->
-    <view class="content"></view>
+    <view class="content">
+      <div class="title">
+        搜索历史
+        <span class="clear"></span>
+      </div>
+      <div class="history">
+        <navigator url>小米</navigator>
+      </div>
+      <!-- 结果 -->
+      <scroll-view scroll-y class="result">
+        <navigator url>冰箱</navigator>
+      </scroll-view>
+    </view>
   </view>
 </template>
 <script>
@@ -53,6 +65,51 @@ export default {
     z-index: 9;
     background-color: #fff;
     display: none;
+    padding: 30rpx;
+    .title {
+      font-size: 27rpx;
+      line-height: 1;
+      color: #333;
+    }
+    .clear {
+      display: block;
+      width: 27rpx;
+      height: 27rpx;
+      float: right;
+      background-image: url(http://static.botue.com/ugo/images/clear.png);
+      background-size: cover;
+    }
+    .history {
+      padding-top: 30rpx;
+      navigator {
+        display: inline-block;
+        line-height: 1;
+        padding: 15rpx 20rpx 12rpx;
+        background-color: #ddd;
+        font-size: 24rpx;
+        margin-right: 20rpx;
+        margin-bottom: 15rpx;
+        color: #333;
+      }
+    }
+    .result {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      background-color: #fff;
+      navigator {
+        line-height: 1;
+        padding: 20rpx 30rpx;
+        font-size: 24rpx;
+        color: #666;
+        border-bottom: 1px solid #eee;
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+    }
   }
   .input-box {
     background-color: #ff2d4a;
