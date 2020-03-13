@@ -151,6 +151,16 @@
     onLoad () {
       this.loadData ()
     },
+    computed: {
+  rightData () {
+    // 根据当前选中的一级分类计算出二级和三级分类的数据
+    const data = this.categories.filter(item => {
+      return item.cat_id === this.currentId
+    })
+    // [] 作为条件是true if ([]) {}
+    return data[0]? data[0].children: []
+  }
+},
     methods: {
       handleChange (e) {
   // 控制一级分类的切换
