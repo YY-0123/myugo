@@ -6,8 +6,8 @@
     <view class="category">
       <!-- 顶级分类 -->
       <view class="sup">
-        <scroll-view scroll-y>
-          <text :class='{active: currentId === item.cat_id}' :key="item.cat_id" v-for="item in categories">{{item.cat_name}}</text>
+        <scroll-view scroll-y @click="handleChange">
+          <text :data-id='item.cat_id' :class='{active: currentId === item.cat_id}' :key="item.cat_id" v-for="item in categories">{{item.cat_name}}</text>
         </scroll-view>
       </view>
       <!-- 子级分类 -->
@@ -152,6 +152,11 @@
       this.loadData ()
     },
     methods: {
+      handleChange (e) {
+  // 控制一级分类的切换
+  // console.log('change' + e.target.dataset.id)
+  this.currentId = e.target.dataset.id
+},
         // 请求后端接口
 async loadData () {
   // 调用分类接口获取数据
