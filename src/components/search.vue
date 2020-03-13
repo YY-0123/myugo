@@ -18,6 +18,13 @@ export default {
   },
   methods: {
     goSearch() {
+      // 获取可视区域的高度，设置父容器的高度为可视区域的高度，并禁止滚动
+      const { windowHeight } = uni.getSystemInfoSync();
+      console.log(windowHeight);
+      // 触发父组件自定义事件，将可视区域高度传给父组件
+      this.$emit("window-height", {
+        height: windowHeight
+      });
       //   console.log("hello");
       // 当输入框获取焦点时，在父元素添加一个类名 focused
       this.isFocused = true;
@@ -25,6 +32,10 @@ export default {
     },
     // 点击取消按钮回复原状态,通过类名的显示与隐藏控制状态
     handleCancel() {
+      // 点击取消按钮回复原始状态
+      this.$emit("window-height", {
+        pageHeight: "auto"
+      });
       this.isFocused = false;
       this.placeholder = "";
     }
@@ -35,7 +46,7 @@ export default {
 .search {
   .content {
     position: absolute;
-    top: 95rpx;
+    top: 94rpx;
     left: 0;
     right: 0;
     bottom: 0;
