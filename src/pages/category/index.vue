@@ -7,16 +7,7 @@
       <!-- 顶级分类 -->
       <view class="sup">
         <scroll-view scroll-y>
-          <text class="active">大家电</text>
-          <text>热门推荐</text>
-          <text>海外购</text>
-          <text>苏宁房产</text>
-          <text>手机相机</text>
-          <text>电脑办公</text>
-          <text>厨卫电器</text>
-          <text>食品酒水</text>
-          <text>居家生活</text>
-          <text>厨房电器</text>
+          <text :class='{active: currentId === item.cat_id}' :key="item.cat_id" v-for="item in categories">{{item.cat_name}}</text>
         </scroll-view>
       </view>
       <!-- 子级分类 -->
@@ -148,11 +139,29 @@
   import search from '@/components/search';
 
   export default {
-    
+     data() {
+    return {
+      categories: [],
+      currentId: 1,
+    };
+  },
     components: {
       search
+    },
+    onLoad () {
+      this.loadData ()
+    },
+    methods: {
+        // 请求后端接口
+async loadData () {
+  // 调用分类接口获取数据
+  const { message } = await this.$request({
+    path: 'categories'
+  })
+  this.categories = message
+}
+      }
     }
-  }
 </script>
 
 <style scoped lang="less">
