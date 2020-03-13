@@ -29,7 +29,7 @@
       </view>
     </view>
     <!-- 回到顶部按钮 -->
-    <view class="goTop icon-top" v-if="scrollTop > 200" @click="goTop"></view>
+    <view class="goTop icon-top" v-if="scrollTop > 100" @click="goTop"></view>
   </view>
 </template>
 
