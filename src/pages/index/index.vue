@@ -28,6 +28,8 @@
         </view>
       </view>
     </view>
+    <!-- 回到顶部按钮 -->
+    <view class="goTop icon-top" v-if="scrollTop > 200" @click="goTop"></view>
   </view>
 </template>
 
@@ -40,8 +42,15 @@ export default {
       pageHeight: "auto",
       swiperData: [],
       navData: [],
-      floorData: []
+      floorData: [],
+      // 页面滚动的距离
+      scrollTop: 0
     };
+  },
+  // 监听页面的滚动
+  onPageScroll(ev) {
+    // 获取当前滚动的距离
+    this.scrollTop = ev.scrollTop;
   },
   components: {
     search
@@ -52,6 +61,10 @@ export default {
     this.queryFloorData();
   },
   methods: {
+    goTop() {
+      // 调用 API 可以设置页面的滚动位置
+      uni.pageScrollTo({ scrollTop: 0 });
+    },
     handleWindowHeight(data) {
       this.pageHeight = data.height + "px";
     },
@@ -163,5 +176,19 @@ swiper {
       }
     }
   }
+}
+.goTop {
+  position: fixed;
+  bottom: 30rpx;
+  right: 30rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100rpx;
+  height: 100rpx;
+  font-size: 48rpx;
+  color: #666;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.8);
 }
 </style>
