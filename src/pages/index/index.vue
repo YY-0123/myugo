@@ -55,32 +55,44 @@ export default {
     handleWindowHeight(data) {
       this.pageHeight = data.height + "px";
     },
-    querySwiperData() {
+    async querySwiperData() {
       // 获取轮播图数据
-      wx.request({
-        url: "https://api-ugo-dev.itheima.net/api/public/v1/home/swiperdata",
-        success: res => {
-          this.swiperData = res.data.message;
-        }
+      const { message } = await this.$request({
+        path: "home/swiperdata"
       });
+      this.swiperData = message;
+      // wx.request({
+      //   url: "https://api-ugo-dev.itheima.net/api/public/v1/home/swiperdata",
+      //   success: res => {
+      //     this.swiperData = res.data.message;
+      //   }
+      // });
     },
-    queryNavData() {
+    async queryNavData() {
       // 获取导航菜单数据
-      wx.request({
-        url: "https://api-ugo-dev.itheima.net/api/public/v1/home/catitems",
-        success: res => {
-          this.navData = res.data.message;
-        }
+      const { message } = await this.$request({
+        path: "home/catitems"
       });
+      this.navData = message;
+      // wx.request({
+      //   url: "https://api-ugo-dev.itheima.net/api/public/v1/home/catitems",
+      //   success: res => {
+      //     this.navData = res.data.message;
+      //   }
+      // });
     },
-    queryFloorData() {
+    async queryFloorData() {
       // 获取楼层商品数据
-      wx.request({
-        url: "https://api-ugo-dev.itheima.net/api/public/v1/home/floordata",
-        success: res => {
-          this.floorData = res.data.message;
-        }
+      const { message } = await this.$request({
+        path: "home/floordata"
       });
+      this.floorData = message;
+      // wx.request({
+      //   url: "https://api-ugo-dev.itheima.net/api/public/v1/home/floordata",
+      //   success: res => {
+      //     this.floorData = res.data.message;
+      //   }
+      // });
     }
   }
 };
