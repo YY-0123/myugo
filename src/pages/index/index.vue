@@ -10,89 +10,20 @@
     </swiper>
     <!-- 导航菜单 -->
     <view class="navs">
-      <navigator url>
-        <image src="/static/uploads/icon_index_nav_1@2x.png" />
-      </navigator>
-      <navigator url>
-        <image src="/static/uploads/icon_index_nav_2@2x.png" />
-      </navigator>
-      <navigator url>
-        <image src="/static/uploads/icon_index_nav_3@2x.png" />
-      </navigator>
-      <navigator url>
-        <image src="/static/uploads/icon_index_nav_4@2x.png" />
+      <navigator url :key="index" v-for="(item,index) in navData">
+        <image :src="item.image_src" />
       </navigator>
     </view>
     <view class="floors">
-      <view class="floor">
+      <view class="floor" :key="index" v-for="(item,index) in floorData">
         <!-- 标题 -->
         <view class="title">
-          <image src="/static/uploads/pic_floor01_title.png" />
+          <image :src="item.floor_title.image_src" />
         </view>
         <!-- 条目 -->
         <view class="items">
-          <navigator url>
-            <image src="/static/uploads/pic_floor01_1@2x.png" />
-          </navigator>
-          <navigator url>
-            <image src="/static/uploads/pic_floor01_2@2x.png" />
-          </navigator>
-          <navigator url>
-            <image src="/static/uploads/pic_floor01_3@2x.png" />
-          </navigator>
-          <navigator url>
-            <image src="/static/uploads/pic_floor01_4@2x.png" />
-          </navigator>
-          <navigator url>
-            <image src="/static/uploads/pic_floor01_5@2x.png" />
-          </navigator>
-        </view>
-      </view>
-      <view class="floor">
-        <!-- 标题 -->
-        <view class="title">
-          <image src="/static/uploads/pic_floor01_title.png" />
-        </view>
-        <!-- 条目 -->
-        <view class="items">
-          <navigator url>
-            <image src="/static/uploads/pic_floor01_1@2x.png" />
-          </navigator>
-          <navigator url>
-            <image src="/static/uploads/pic_floor01_2@2x.png" />
-          </navigator>
-          <navigator url>
-            <image src="/static/uploads/pic_floor01_3@2x.png" />
-          </navigator>
-          <navigator url>
-            <image src="/static/uploads/pic_floor01_4@2x.png" />
-          </navigator>
-          <navigator url>
-            <image src="/static/uploads/pic_floor01_5@2x.png" />
-          </navigator>
-        </view>
-      </view>
-      <view class="floor">
-        <!-- 标题 -->
-        <view class="title">
-          <image src="/static/uploads/pic_floor01_title.png" />
-        </view>
-        <!-- 条目 -->
-        <view class="items">
-          <navigator url>
-            <image src="/static/uploads/pic_floor01_1@2x.png" />
-          </navigator>
-          <navigator url>
-            <image src="/static/uploads/pic_floor01_2@2x.png" />
-          </navigator>
-          <navigator url>
-            <image src="/static/uploads/pic_floor01_3@2x.png" />
-          </navigator>
-          <navigator url>
-            <image src="/static/uploads/pic_floor01_4@2x.png" />
-          </navigator>
-          <navigator url>
-            <image src="/static/uploads/pic_floor01_5@2x.png" />
+          <navigator url :key="i" v-for="(img,i) in item.product_list">
+            <image :src="img.image_src" />
           </navigator>
         </view>
       </view>
@@ -107,7 +38,9 @@ export default {
     return {
       title: "Nihao",
       pageHeight: "auto",
-      swiperData: []
+      swiperData: [],
+      navData: [],
+      floorData: []
     };
   },
   components: {
@@ -115,6 +48,8 @@ export default {
   },
   onLoad() {
     this.querySwiperData();
+    this.queryNavData();
+    this.queryFloorData();
   },
   methods: {
     handleWindowHeight(data) {
@@ -126,6 +61,24 @@ export default {
         url: "https://api-ugo-dev.itheima.net/api/public/v1/home/swiperdata",
         success: res => {
           this.swiperData = res.data.message;
+        }
+      });
+    },
+    queryNavData() {
+      // 获取导航菜单数据
+      wx.request({
+        url: "https://api-ugo-dev.itheima.net/api/public/v1/home/catitems",
+        success: res => {
+          this.navData = res.data.message;
+        }
+      });
+    },
+    queryFloorData() {
+      // 获取楼层商品数据
+      wx.request({
+        url: "https://api-ugo-dev.itheima.net/api/public/v1/home/floordata",
+        success: res => {
+          this.floorData = res.data.message;
         }
       });
     }
