@@ -2,7 +2,13 @@
   <view class="search" :class="{focused: isFocused}">
     <!-- 搜索框 -->
     <view class="input-box">
-      <input :placeholder="placeholder" type="text" @focus="goSearch" />
+      <input
+        v-model="keyword"
+        @input="handleQuery"
+        :placeholder="placeholder"
+        type="text"
+        @focus="goSearch"
+      />
       <text class="cancel" @click="handleCancel">取消</text>
     </view>
     <!-- 搜索结果 -->
@@ -16,7 +22,7 @@
       </div>
       <!-- 结果 -->
       <scroll-view scroll-y class="result">
-        <navigator url>冰箱</navigator>
+        <navigator url :key="item.goods_id" v-for="item in qlist">{{item.goods_name}}</navigator>
       </scroll-view>
     </view>
   </view>
@@ -25,10 +31,19 @@
 export default {
   data() {
     return {
-      isFocused: false
+      isFocused: false,
+      keyword: "",
+      qlist: []
     };
   },
   methods: {
+    async handleQuery() {
+      // 根据关键字调用后台接口查询商品列表
+      const { message } = await this.$request({
+        path: "goods/qsearch?query=" + this.keyword
+      });
+      this.qlist = message;
+    },
     goSearch() {
       // 获取可视区域的高度，设置父容器的高度为可视区域的高度，并禁止滚动
       const { windowHeight } = uni.getSystemInfoSync();
