@@ -16,7 +16,7 @@
     <view class="content">
       <div class="title">
         搜索历史
-        <span class="clear"></span>
+        <span class="clear" @click="handleClear"></span>
       </div>
       <div class="history">
         <navigator url :key="index" v-for="(item,index) in history">{{item}}</navigator>
@@ -40,6 +40,13 @@ export default {
     };
   },
   methods: {
+    handleClear() {
+      // 清空搜索历史：
+      // 1、清空缓存
+      uni.removeStorageSync("history");
+      // 2、清空状态数据
+      this.history = [];
+    },
     handleEnter(e) {
       // 监听回车事件
       // 获取输入框最新的值
