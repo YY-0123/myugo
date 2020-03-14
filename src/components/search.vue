@@ -3,6 +3,7 @@
     <!-- 搜索框 -->
     <view class="input-box">
       <input
+        @confirm="handleEnter"
         v-model="keyword"
         @input="handleQuery"
         :placeholder="placeholder"
@@ -18,10 +19,10 @@
         <span class="clear"></span>
       </div>
       <div class="history">
-        <navigator url>小米</navigator>
+        <navigator url :key="index" v-for="(item,index) in history">{{item}}</navigator>
       </div>
       <!-- 结果 -->
-      <scroll-view scroll-y class="result">
+      <scroll-view scroll-y class="result" v-if="qlist.length>0">
         <navigator url :key="item.goods_id" v-for="item in qlist">{{item.goods_name}}</navigator>
       </scroll-view>
     </view>
@@ -33,10 +34,24 @@ export default {
     return {
       isFocused: false,
       keyword: "",
-      qlist: []
+      qlist: [],
+      // 缓存历史关键字：先查询之前的搜索历史，如果没有查到，默认为[]
+      history: uni.getStorageSync("history") || []
     };
   },
   methods: {
+    handleEnter(e) {
+      // 监听回车事件
+      // 获取输入框最新的值
+      let v = e.detail.value;
+      this.history.unshift(v);
+      // 控制数组的去重操作
+      let arr = [...new Set(this.history)];
+      // 更新状态
+      this.history = arr;
+      // 把当前的历史关键字进行缓存
+      uni.setStorageSync("history", arr);
+    },
     async handleQuery() {
       // 根据关键字调用后台接口查询商品列表
       const { message } = await this.$request({
@@ -63,8 +78,14 @@ export default {
       this.$emit("window-height", {
         pageHeight: "auto"
       });
+      // 取消功能，回复原始状态
       this.isFocused = false;
+      // 清空提示信息
       this.placeholder = "";
+      // 清空关键字
+      this.keyword = "";
+      // 清空搜索结果
+      this.qlist = [];
     }
   }
 };
