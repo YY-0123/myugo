@@ -36,7 +36,8 @@ export default {
       keyword: "",
       qlist: [],
       // 缓存历史关键字：先查询之前的搜索历史，如果没有查到，默认为[]
-      history: uni.getStorageSync("history") || []
+      history: uni.getStorageSync("history") || [],
+      timer: -1
     };
   },
   methods: {
@@ -59,12 +60,16 @@ export default {
       // 把当前的历史关键字进行缓存
       uni.setStorageSync("history", arr);
     },
-    async handleQuery() {
-      // 根据关键字调用后台接口查询商品列表
-      const { message } = await this.$request({
-        path: "goods/qsearch?query=" + this.keyword
-      });
-      this.qlist = message;
+    handleQuery() {
+      // 通过函数防抖的方式限制接口调用的频率
+      clearTimeout(this.timer);
+      this.timer = setTimeout(async () => {
+        // 根据关键字调用后台接口查询商品列表
+        const { message } = await this.$request({
+          path: "goods/qsearch?query=" + this.keyword
+        });
+        this.qlist = message;
+      }, 1000);
     },
     goSearch() {
       // 获取可视区域的高度，设置父容器的高度为可视区域的高度，并禁止滚动
