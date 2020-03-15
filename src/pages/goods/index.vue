@@ -21,7 +21,7 @@
     <view class="action">
       <button open-type="contact" class="icon-handset">联系客服</button>
       <text class="cart icon-cart" @click="goCart">购物车</text>
-      <text class="add">加入购物车</text>
+      <text class="add" @click="addCart">加入购物车</text>
       <text class="buy" @click="createOrder">立即购买</text>
     </view>
   </view>
@@ -35,6 +35,8 @@
         id: '',
         // 当前商品的所有信息
         goods: null,
+        // 购物车数据，先查询缓存是否有数据，如果没有初始化为空数组
+        cart: uni.getStorageSync('mycart') || []
     }
   },
   onLoad(param) {
@@ -42,6 +44,48 @@
     this.loadData (param.id)
   },
     methods: {
+      addCart () {
+         // 添加购物车
+  // 先判断用户是否登录
+  // if (localStorage.getItem('mytoken')) {
+  //   // 已经登录，直接将当前商品信息提交到后台接口即可
+  // } else {
+  //   // 没有登录，把商品信息添加到缓存
+  // }
+
+  // 直接按照没有登录的流程实现
+  let product = {
+    goods_id: this.goods.goods_id,
+    goods_name: this.goods.goods_name,
+    goods_price: this.goods.goods_price,
+    goods_num: 1,
+    goods_img: this.goods.goods_small_logo
+  }
+  // 加入购物车:判断当前商品是否在购物车里面
+  let isExist = this.cart.some(item => {
+    return item.goods_id === this.goods.goods_id
+  })
+  if (isExist) {
+    // 已经存在该商品
+    this.cart.some(item => {
+      if (item.goods_id === this.goods.goods_id) {
+        // 修改当前商品的数据
+        item.goods_num += 1
+        // 找到商品后，终止后续遍历
+        return true
+      }
+    })
+  } else {
+    // 首次添加商品
+    this.cart.push(product)
+  }
+  // 将购物车数据进行缓存
+  uni.setStorageSync('mycart', this.cart)
+  // 加入成功后提示一下
+  uni.showToast({
+    title: '加入购物车成功'
+  })
+},
       async loadData (id) {
         // 加载商品的详细数据
         const {message} = await this.$request({
