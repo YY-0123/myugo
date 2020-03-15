@@ -97,13 +97,17 @@
         this.goods = message
       },
       goCart () {
+        // 跳转到购物车页面（Tab页面）
         uni.switchTab({
           url: '/pages/cart/index'
         })
       },
+      // 立即购买
       createOrder () {
-        uni.navigateTo({
-          url: '/pages/order/index'
+        // 先加入购物车，然后跳转到购物车页面
+        this.addCart()
+        uni.switchTab({
+          url: '/pages/cart/index'
         })
       }
     }
