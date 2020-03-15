@@ -2,32 +2,20 @@
   <view class="wrapper">
     <!-- 商品图片 -->
     <swiper class="pics" indicator-dots indicator-color="rgba(255, 255, 255, 0.6)" indicator-active-color="#fff">
-      <swiper-item>
-        <image src="http://static.botue.com/ugo/uploads/detail_1.jpg"></image>
-      </swiper-item>
-      <swiper-item>
-        <image src="http://static.botue.com/ugo/uploads/detail_2.jpg"></image>
-      </swiper-item>
-      <swiper-item>
-        <image src="http://static.botue.com/ugo/uploads/detail_3.jpg"></image>
-      </swiper-item>
-      <swiper-item>
-        <image src="http://static.botue.com/ugo/uploads/detail_4.jpg"></image>
-      </swiper-item>
-      <swiper-item>
-        <image src="http://static.botue.com/ugo/uploads/detail_5.jpg"></image>
+      <swiper-item :key="item.goods_id" v-for="item in goods.pics">
+        <image :src="item.pics_big_url"></image>
       </swiper-item>
     </swiper>
     <!-- 基本信息 -->
     <view class="meta">
-      <view class="price">￥199</view>
-      <view class="name">初语秋冬新款毛衣女 套头宽松针织衫简约插肩袖上衣</view>
-      <view class="shipment">快递: 免运费</view>
+      <view class="price">￥{{goods.goods_price}}</view>
+      <view class="name">{{goods.goods_name}}</view>
+      <view class="shipment">快递: {{goods.goods_state===2?'免邮':'不包邮'}}</view>
       <text class="collect icon-star">收藏</text>
     </view>
     <!-- 商品详情 -->
     <view class="detail">
-      <rich-text></rich-text>
+      <view v-html='goods.goods_introduce'></view>
     </view>
     <!-- 操作 -->
     <view class="action">
@@ -43,25 +31,27 @@
   export default {
     data() {
     return {
-      id: "",
-      goods: [],
-    };
+              // 当前商品的id
+        id: '',
+        // 当前商品的所有信息
+        goods: null,
+    }
   },
   onLoad(param) {
     this.id = param.id;
+    this.loadData (param.id)
   },
     methods: {
-        async loadData (id) {
-            // 调用接口获取商品的详细信息
-             const {message} = await this.$request({
-    path: 'goods/detail',
-    param: {
-      goods_id: id
-    }
-  })
-  // 更新商品详情数据
-  this.goods = message;
-        },
+      async loadData (id) {
+        // 加载商品的详细数据
+        const {message} = await this.$request({
+          path: 'goods/detail',
+          param: {
+            goods_id: id
+          }
+        })
+        this.goods = message
+      },
       goCart () {
         uni.switchTab({
           url: '/pages/cart/index'
