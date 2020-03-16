@@ -50,7 +50,7 @@
       <view class="total">
         合计: <text>￥</text><label>{{countTotal}}</label><text>.00</text>
       </view>
-      <view class="pay">结算({{checkedProducts.length}})</view>
+      <view @click="createOrder()" class="pay">结算({{checkedProducts.length}})</view>
     </view>
   </view>
 </template>
@@ -93,6 +93,35 @@
       this.cart = uni.getStorageSync('mycart') || []
     },
     methods: {
+       createOrder () {
+        // 创建订单
+        // 1、判断是否选中了商品
+        if (this.checkedProducts.length === 0) {
+          // 没有选中商品，提示一下，终止后续代码运行
+          uni.showToast({
+            title: '请选择商品'
+          })
+          return 
+        } 
+        // 2、判断是否选中了收货地址
+        if (this.address === null) {
+          // 没有选中地址，提示选择地址，终止后续代码运行
+          uni.showToast({
+            title: '请选择地址'
+          })
+          return 
+        }
+        // 3、判断是否已经登录
+        // const token = uni.getStorageSync('mytoken')
+        // if (!token) {
+        //   // 没有登录过，跳转到登录页面，进行登录
+        //   uni.navigateTo({
+        //     url: '/pages/auth/index'
+        //   })
+        // }
+        // 4、创建订单
+
+      },
       getAddress () {
   // 获取收货地址
   uni.chooseAddress({
