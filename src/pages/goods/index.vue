@@ -15,7 +15,7 @@
     </view>
     <!-- 商品详情 -->
     <view class="detail">
-      <view v-html='goods.goods_introduce'></view>
+      <view :style="{fontSize:0}" v-html='goods.goods_introduce'></view>
     </view>
     <!-- 操作 -->
     <view class="action">
