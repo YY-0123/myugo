@@ -45,9 +45,9 @@
         全选
       </label>
       <view class="total">
-        合计: <text>￥</text><label>14110</label><text>.00</text>
+        合计: <text>￥</text><label>{{countTotal}}</label><text>.00</text>
       </view>
-      <view class="pay">结算(3)</view>
+      <view class="pay">结算({{checkedProducts.length}})</view>
     </view>
   </view>
 </template>
@@ -60,6 +60,17 @@
       }
     },
     computed: {
+      countTotal () {
+  // 计算所有的选中的商品的总价
+  // 单价 * 数量 并 进行累加
+  let total = 0
+  this.checkedProducts.forEach(item => {
+    if (item.goods_check) {
+      total += item.goods_price * item.goods_num
+    }
+  })
+  return total
+},
       isAll () {
         // 通过计算属性解决uni.app的bug(三目运算符条件不支持计算)
         return this.checkedProducts.length === this.cart.length
