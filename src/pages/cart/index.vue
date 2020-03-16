@@ -112,13 +112,13 @@
           return 
         }
         // 3、判断是否已经登录
-        // const token = uni.getStorageSync('mytoken')
-        // if (!token) {
-        //   // 没有登录过，跳转到登录页面，进行登录
-        //   uni.navigateTo({
-        //     url: '/pages/auth/index'
-        //   })
-        // }
+        const token = uni.getStorageSync('mytoken')
+        if (!token) {
+          // 没有登录过，跳转到登录页面，进行登录
+          uni.navigateTo({
+            url: '/pages/auth/index'
+          })
+        }
         // 4、创建订单
 
       },

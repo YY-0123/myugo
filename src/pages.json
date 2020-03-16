@@ -20,6 +20,9 @@
 		},
 		{
 			"path": "pages/goods/index"
+		},
+		{
+			"path": "pages/auth/index"
 		}
 	],
 	"globalStyle": {
