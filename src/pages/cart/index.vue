@@ -33,7 +33,7 @@
           </view>
           <!-- 选框 -->
           <view class="checkbox">
-            <icon type="success" size="20" color="#ea4451"></icon>
+            <icon @click="toggleTtem(index)" type="success" size="20" :color="item.goods_check?'#ea4451':'#ccc'"></icon>
           </view>
         </view>
       </view>
@@ -65,6 +65,12 @@
       this.cart = uni.getStorageSync('mycart') || []
     },
     methods: {
+      toggleTtem (index) {
+        // 控制单个商品的选中与否
+        this.cart[index].goods_check = !this.cart[index].goods_check
+        // 把选中状态同步到缓存
+        uni.setStorageSync('mycart', this.cart)
+      },
       changeNum (index,n) {
         // 修改购物车商品的数量
         // 商品数量最少为1

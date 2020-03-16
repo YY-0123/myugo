@@ -59,7 +59,8 @@
     goods_name: this.goods.goods_name,
     goods_price: this.goods.goods_price,
     goods_num: 1,
-    goods_img: this.goods.goods_small_logo
+    goods_img: this.goods.goods_small_logo,
+    goods_check: false
   }
   // 加入购物车:判断当前商品是否在购物车里面
   let isExist = this.cart.some(item => {
