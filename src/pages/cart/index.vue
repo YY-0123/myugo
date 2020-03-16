@@ -72,9 +72,7 @@
   // 单价 * 数量 并 进行累加
   let total = 0
   this.checkedProducts.forEach(item => {
-    if (item.goods_check) {
       total += item.goods_price * item.goods_num
-    }
   })
   return total
 },

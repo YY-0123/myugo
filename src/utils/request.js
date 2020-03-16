@@ -2,7 +2,7 @@
 // 采用官方规范的方式开发插件
 export default {
     install: (Vue, options) => {
-        Vue.prototype.$request = async ({ path, param }) => {
+        Vue.prototype.$request = async ({ path, param, method = 'get' }) => {
             // 实现发送请求
             uni.showLoading({
                 title: '正在加载数据...',
@@ -12,7 +12,8 @@ export default {
             const [error, res] = await uni.request({
                 url: options.baseURL + path,
                 // 请求参数
-                data: param
+                data: param,
+                method: method
             })
             // 隐藏提示
             uni.hideLoading()
