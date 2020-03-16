@@ -27,7 +27,7 @@
             <!-- 加减 -->
             <view class="amount">
               <text class="reduce" @click="changeNum(index,-1)">-</text>
-              <input type="number" value="{{item.goods_num}}" class="number">
+              <input type="number" :value="item.goods_num" class="number">
               <text class="plus" @click="changeNum(index,1)">+</text>
             </view>
           </view>
@@ -41,7 +41,7 @@
     <!-- 其它 -->
     <view class="extra">
       <label class="checkall">
-        <icon type="success" color="#ccc" size="20"></icon>
+        <icon @click="toggleAll()" type="success" :color="isAll?'#EA4451':'#ccc'" size="20"></icon>
         全选
       </label>
       <view class="total">
@@ -59,12 +59,32 @@
         cart: [],
       }
     },
+    computed: {
+      isAll () {
+        // 通过计算属性解决uni.app的bug(三目运算符条件不支持计算)
+        return this.checkedProducts.length === this.cart.length
+      },
+      checkedProducts () {
+        // 过滤出所有选中的商品
+        return this.cart.filter(item => item.goods_check)
+      }
+    },
     // 每次页面显示时都要重新获取缓存最新的数据
     onShow () {
       // 初始化购物车数据
       this.cart = uni.getStorageSync('mycart') || []
     },
     methods: {
+      toggleAll () {
+  // 控制所有商品的选中和反选
+  let flag = !this.isAll
+  this.cart.forEach(item => {
+    // 把所有的商品状态修改为全选按钮相反的状态
+    item.goods_check = flag
+  })
+  // 把全选的状态同步到缓存
+  uni.setStorageSync('mycart', this.cart)
+},
       toggleTtem (index) {
         // 控制单个商品的选中与否
         this.cart[index].goods_check = !this.cart[index].goods_check
