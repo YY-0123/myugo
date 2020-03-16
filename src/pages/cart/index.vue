@@ -2,13 +2,16 @@
   <view class="wrapper">
     <!-- 收货信息 -->
     <view class="shipment">
-      <view class="dt">收货人: </view>
-      <view class="dd meta">
-        <text class="name">刘德华</text>
-        <text class="phone">13535337057</text>
-      </view>
-      <view class="dt">收货地址:</view>
-      <view class="dd">广东省广州市天河区一珠吉</view>
+      <template v-if="address">
+        <view class="dt">收货人: </view>
+    <view class="dd meta">
+      <text class="name">{{address.userName}}</text>
+      <text class="phone">{{address.telNumber}}</text>
+    </view>
+    <view class="dt">收货地址:</view>
+    <view class="dd">{{addressDetail}}</view>
+  </template>
+  <button @click='getAddress' v-else>获取收货地址</button> 
     </view>
     <!-- 购物车 -->
     <view class="carts">
@@ -56,10 +59,14 @@
   export default {
     data() {
       return {
+        address: null,
         cart: [],
       }
     },
     computed: {
+      addressDetail () {
+  return this.address && this.address.provinceName + this.address.cityName + this.address.countyName + this.address.detailInfo
+},
       countTotal () {
   // 计算所有的选中的商品的总价
   // 单价 * 数量 并 进行累加
@@ -86,6 +93,14 @@
       this.cart = uni.getStorageSync('mycart') || []
     },
     methods: {
+      getAddress () {
+  // 获取收货地址
+  uni.chooseAddress({
+    success: (res) => {
+      this.address = res
+    }
+  })
+},
       toggleAll () {
   // 控制所有商品的选中和反选
   let flag = !this.isAll
