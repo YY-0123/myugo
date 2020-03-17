@@ -70,6 +70,24 @@
       })
     }
   })
+  // 把支付过的商品从购物车清空
+let orderInfo = this.list.filter(item => {
+  return item.order_number === e.target.dataset.id
+})
+// 此次支付订单中的商品列表
+let goods = orderInfo[0].goods
+// 获取该商品列表中的所有ID
+goods = goods.map(item => {
+  return item.goods_id
+})
+// 查询购物车当前的商品
+let cart = uni.getStorageSync('mycart') || []
+// 过滤出剩余的商品（未支付的商品）
+let other = cart.filter(item => {
+  return !goods.includes(item.goods_id)
+})
+// 把未支付的商品重新放回缓存
+uni.setStorageSync('mycart', other)
 },
       async allOrders () {
   // 获取所有订单数据
